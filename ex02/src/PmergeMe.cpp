@@ -1,15 +1,12 @@
 #include "../include/PmergeMe.hpp"
 #include <bits/stdc++.h>
 
-
 int PmergeMe::binarySearch(std::vector<int> &numbers, int x, int ceiling)
 {
 	int low = 0;
 	while (low <= ceiling)
 	{
 		int mid = low + (ceiling - low) / 2;
-		// if (numbers[mid] == x) // can be removed, not accurate
-		// 	return mid;
 		if (numbers[mid] < x)
 			low = mid + 1;
 		else
@@ -115,7 +112,6 @@ std::vector<int> PmergeMe::doMagic(std::vector<int> numbers)
 		sortedMain.insert(sortedMain.begin() + index, pend[i]);
 	}
 
-
 	std::cout << "New Combined Main: " << std::endl;;
 	for (auto i: sortedMain)
 	{
@@ -125,40 +121,3 @@ std::vector<int> PmergeMe::doMagic(std::vector<int> numbers)
 	return sortedMain;
 }
 
-
-
-
-// void PmergeMe::doMagic(std::vector<int> numbers)
-// {
-// 	extra = -1;
-// 	for (int i = 2; i < argc; i+= 2)
-// 	{
-// 		if (std::stoi(argv[i - 1]) < std::stoi(argv[i]))
-// 			meme.datuliini.push_back(std::make_pair(std::stoi(argv[i - 1]), std::stoi(argv[i])));
-// 		else
-// 			meme.datuliini.push_back(std::make_pair(std::stoi(argv[i]), std::stoi(argv[i - 1]))); //this contains all the data
-// 		std::cout << "First : " << meme.datuliini.back().first << std::endl;
-// 		std::cout << "Second : " << meme.datuliini.back().second << std::endl;
-// 	}
-// 	if (argc % 2 == 0)
-// 		meme.extra = std::stoi(argv[argc - 1]);
-// 	std::cout << "Extra :" << meme.extra << std::endl;
-
-
-// 	std::vector<int> main;
-// 	std::vector<int> pend;
-// 	for (auto &p: meme.datuliini) //loop through 
-// 	{
-// 		main.push_back(p.second);
-// 		pend.push_back(p.first);
-// 	}
-// 	if (meme.extra != -1)
-// 	{
-// 		pend.push_back(meme.extra);
-// 	}
-// 	//here we would once again call to make pairs for the main chain. then create main and pend from those, repeat..? so during each step
-// 	//we have one PAIR CHAIN and we create main and pend vector from those? Then we again create new PAIR CHAIN from the main vector?
-
-// 	// here we would find out once again who is the winner and make pairs, and who are the losers
-// 	//we do this as long as in winners we only have one left.. and then we start constructingg??
-// }
