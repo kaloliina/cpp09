@@ -15,6 +15,49 @@ int PmergeMe::binarySearch(std::vector<int> &numbers, int x, int ceiling)
 	return low;
 }
 
+// Starting with 0 and 1 (these are fixed), the sequence progresses as follows:
+
+// The next number is: 1 + 2 × 0 = 1 So, the sequence becomes: 0, 1, 1.
+// After that: 1 + 2 × 1 = 3 The sequence is now: 0, 1, 1, 3.
+// After that: 3 + 2 × 1 = 5 The sequence is now: 0, 1, 1, 3, 5.
+// After that: 5 + 2 × 3 = 11 The sequence is now: 0, 1, 1, 3, 5, 11.
+
+//lets first generate Jacobsthal sequence that is required.. after this we get the insertion order...
+
+
+std::vector<int> getInsertionOrder(size_t size)
+{
+	std::vector<int> orderofthephoenix;
+	size_t prev = 1;
+	size_t prevOfPrev = 0;
+	size_t curr = 0;
+	while (curr <= size)
+	{
+		curr = prev + (2 * prevOfPrev);
+		if (curr > size)
+			break ;
+		orderofthephoenix.push_back(curr);
+		prevOfPrev = prev;
+		prev = curr;
+	}
+
+	std::vector<int> realstuff;
+	realstuff.push_back(1);
+	std::cout << "ORDER: ";
+	for (size_t i = 1; i < orderofthephoenix.size(); i++)
+	{
+		realstuff.push_back(orderofthephoenix[i]);
+		std::cout << orderofthephoenix[i];
+		for (int y = orderofthephoenix[i - 1] + 1; y < orderofthephoenix[i]; y++)
+		{
+		std::cout << y;
+			realstuff.push_back(y);
+		}
+	}
+	return realstuff;
+}
+
+
 std::vector<int> PmergeMe::doMagic(std::vector<int> numbers)
 {
 	if (numbers.size() <= 1) //This is where we stop the recursive call because if main chain has one left, we are done and we start going back
@@ -96,7 +139,13 @@ std::vector<int> PmergeMe::doMagic(std::vector<int> numbers)
 	pend = newPend;
 	//Now we need to rearrange the pend chain to match...
 
-
+	std::vector<int> sequence = getInsertionOrder(pend.size());
+	std::cout << "Sequence: " << std::endl;;
+	for (auto i: sequence)
+	{
+		std::cout << i << " ";
+	}
+	std::cout << std::endl;
 	int ceiling;
 	for (size_t i = 0; i < pend.size(); ++i)
 	{
