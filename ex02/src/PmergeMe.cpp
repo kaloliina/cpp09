@@ -54,6 +54,12 @@ std::vector<int> getInsertionOrder(size_t size)
 			realstuff.push_back(y);
 		}
 	}
+	int last; //so need to add stuff to the end if they are remaining
+	last = orderofthephoenix.back();
+	for (int i = size; i > last; --i)
+	{
+		realstuff.push_back(i);
+	}
 	return realstuff;
 }
 
@@ -146,7 +152,7 @@ std::vector<int> PmergeMe::doMagic(std::vector<int> numbers)
 		std::cout << i << " ";
 	}
 	std::cout << std::endl;
-	int ceiling;
+	// int ceiling;
 	for (size_t i = 0; i < pend.size(); ++i)
 	{
 		if (i == 0)
@@ -154,11 +160,11 @@ std::vector<int> PmergeMe::doMagic(std::vector<int> numbers)
 			sortedMain.insert(sortedMain.begin(), pend[0]);
 			continue;
 		}
-		ceiling = i + 1;
-		if (extra != -1 && pend.begin() + i + 1 == pend.end())
-			ceiling = 0;
-		int index = binarySearch(sortedMain, pend[i], ceiling);
-		sortedMain.insert(sortedMain.begin() + index, pend[i]);
+		// ceiling = i + 1; //later
+		// if (extra != -1 && pend.begin() + i + 1 == pend.end())
+		// 	ceiling = 0;
+		int index = binarySearch(sortedMain, pend[sequence[i] - 1], sortedMain.size() - 1);
+		sortedMain.insert(sortedMain.begin() + index, pend[sequence[i] - 1]);
 	}
 
 	std::cout << "New Combined Main: " << std::endl;;
