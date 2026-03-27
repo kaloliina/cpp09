@@ -152,7 +152,7 @@ std::vector<int> PmergeMe::doMagic(std::vector<int> numbers)
 		std::cout << i << " ";
 	}
 	std::cout << std::endl;
-	// int ceiling;
+	int ceiling;
 	for (size_t i = 0; i < pend.size(); ++i)
 	{
 		if (i == 0)
@@ -160,10 +160,10 @@ std::vector<int> PmergeMe::doMagic(std::vector<int> numbers)
 			sortedMain.insert(sortedMain.begin(), pend[0]);
 			continue;
 		}
-		// ceiling = i + 1; //later
-		// if (extra != -1 && pend.begin() + i + 1 == pend.end())
-		// 	ceiling = 0;
-		int index = binarySearch(sortedMain, pend[sequence[i] - 1], sortedMain.size() - 1);
+		ceiling = i + 1; //later
+		if (extra != -1 && pend.begin() + i + 1 == pend.end())
+			ceiling = sortedMain.size() - 1;
+		int index = binarySearch(sortedMain, pend[sequence[i] - 1], ceiling);
 		sortedMain.insert(sortedMain.begin() + index, pend[sequence[i] - 1]);
 	}
 
