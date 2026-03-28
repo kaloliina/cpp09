@@ -21,9 +21,8 @@ class PmergeMe
 	private:
 
 	public:
-	std::vector<int> winners; ///mysteryyy!
-	std::vector<std::pair<int, int>> datuliini;
-	std::unordered_map<int, int> losers;
+	std::vector<int> chain; ///mysteryyy!
+	size_t numberOfElements;
 //	int extra;
 	std::stack<int> stack;
 	PmergeMe() = default;
@@ -31,6 +30,9 @@ class PmergeMe
 	PmergeMe& operator=(PmergeMe& src) = default;
 	~PmergeMe() = default;
 
+	void	parseAndStore(int argc, char *argv[]);
 	std::vector<int> doMagic(std::vector<int> numbers);
 	int binarySearch(std::vector<int> &numbers, int x, int ceiling);
+	void	printVector(const std::string& message, const std::vector<int> chain, bool newLine);
+	void	printPairs(const std::string& message, const std::vector<std::pair<int, int>> pairs, int extra);
 };

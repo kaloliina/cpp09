@@ -1,5 +1,27 @@
 #include "../include/PmergeMe.hpp"
 
+void PmergeMe::parseAndStore(int argc, char *argv[])
+{
+	std::stringstream ss;
+	if (argc < 2)
+		throw std::runtime_error("Expected Input: ./PmergeMe <Numbers to Sort>");
+	for (int i = 1; i < argc; i++)
+	{
+		ss << argv[i] << ' ';
+	}
+	std::string token;
+	size_t pos;
+
+	while (getline(ss, token, ' '))
+	{
+		chain.push_back(std::stoi(token, &pos));
+		if (token.length() != pos)
+			throw std::runtime_error("Problemos mi amiga");
+	}
+	numberOfElements = chain.size();
+	std::cout << "Number of Elements: " << numberOfElements << std::endl;
+}
+
 //Might be good to add debug note on number of comparisons etc:D
 
 /*
@@ -76,7 +98,7 @@ std::vector<int> getInsertionOrder(size_t size)
 }
 
 [[maybe_unused]]
-static void	printVector(const std::string& message, const std::vector<int> chain, bool newLine)
+void	PmergeMe::printVector(const std::string& message, const std::vector<int> chain, bool newLine)
 {
 	std::cout << message << ": ";
 	for (int x: chain)
@@ -89,7 +111,7 @@ static void	printVector(const std::string& message, const std::vector<int> chain
 }
 
 [[maybe_unused]]
-static void	printPairs(const std::string& message, const std::vector<std::pair<int, int>> pairs, int extra)
+void	PmergeMe::printPairs(const std::string& message, const std::vector<std::pair<int, int>> pairs, int extra)
 {
 	std::cout << message << ": ";
 	for (auto x: pairs)
