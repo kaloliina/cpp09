@@ -8,6 +8,10 @@ SRCS = $(SRC_DIR)main.cpp $(SRC_DIR)PmergeMe.cpp
 OBJS = $(SRCS:$(SRC_DIR)%.cpp=$(OBJ_DIR)%.o)
 HEADERS = $(INC_DIR)PmergeMe.hpp
 
+ifdef DEBUG
+	CXXFLAGS += -DDEBUG
+endif
+
 all: $(NAME)
 
 $(NAME) : $(OBJS)

@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef DEBUG
+	#define DEBUG_PRINT(func, ...) func(__VA_ARGS__)
+#else
+	#define DEBUG_PRINT(func, ...) do {} while (0)
+#endif
+
 #include <iostream>
 #include <vector>
 #include <utility>
@@ -13,7 +19,6 @@
 class PmergeMe
 {
 	private:
-
 
 	public:
 	std::vector<int> winners; ///mysteryyy!

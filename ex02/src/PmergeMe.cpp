@@ -1,5 +1,7 @@
 #include "../include/PmergeMe.hpp"
 
+//Might be good to add debug note on number of comparisons etc:D
+
 /*
 We use binary search in order to find the correct position for the number in chain.
 - We have a parameter called ceiling. This is the max range that we are searching. Every number has it's pair in main chain,
@@ -73,8 +75,8 @@ std::vector<int> getInsertionOrder(size_t size)
 	return order;
 }
 
-
-static void	printVector(const std::string& message, const std::vector<int> chain)
+[[maybe_unused]]
+static void	printVector(const std::string& message, const std::vector<int> chain, bool newLine)
 {
 	std::cout << message << ": ";
 	for (int x: chain)
@@ -82,8 +84,11 @@ static void	printVector(const std::string& message, const std::vector<int> chain
 		std::cout << x << " ";
 	}
 	std::cout << std::endl;
+	if (newLine == true)
+		std::cout << std::endl;
 }
 
+[[maybe_unused]]
 static void	printPairs(const std::string& message, const std::vector<std::pair<int, int>> pairs, int extra)
 {
 	std::cout << message << ": ";
@@ -136,7 +141,7 @@ std::vector<int> PmergeMe::doMagic(std::vector<int> numbers)
 	}
 	if (numbers.size() % 2 == 1)
 		extra = numbers[numbers.size() - 1];
-	printPairs("Pairs", datu, extra);
+	DEBUG_PRINT(printPairs, "Pairs", datu, extra);
 
 	//Divide the pairs into winners and losers chain.
 	std::vector<int> main;
@@ -150,9 +155,8 @@ std::vector<int> PmergeMe::doMagic(std::vector<int> numbers)
 		pend.push_back(extra);
 
 	//DEBUG - could there be a nicer way to handle all of these debug things.. maybe we can find similarities with other debug parts and make a separate function out of them?
-	printVector("Main Chain", main);
-	printVector("Pend Chain", pend);
-	std::cout << std::endl;
+	DEBUG_PRINT(printVector, "Main Chain", main, 0);
+	DEBUG_PRINT(printVector, "Pend Chain", pend, 1);
 
 	//Repeat steps 1 & 2 as long as we have more than 1 elements in the main chain.
 	std::vector<int> sortedMain = doMagic(main);
@@ -175,13 +179,13 @@ std::vector<int> PmergeMe::doMagic(std::vector<int> numbers)
 	if (extra != -1)
 		newPend.push_back(extra);
 	pend = newPend;
-	printPairs("Pairs", datu, extra); //Reminder of the pairs.. :)
-	printVector("Sorted Main Chain", sortedMain);
-	printVector("Sorted Pend Chain", pend);
+	DEBUG_PRINT(printPairs, "Pair Reminder", datu, extra); //Reminder of the pairs.. :)
+	DEBUG_PRINT(printVector, "Sorted Main Chain", sortedMain, 0);
+	DEBUG_PRINT(printVector, "Sorted Pend Chain", pend, 0);
 
 	//Find the optimized insertion order.
 	std::vector<int> sequence = getInsertionOrder(pend.size());
-	printVector("Insertion Order", sequence);	
+	DEBUG_PRINT(printVector, "Insertion Order", sequence, 0);	
 
 	//Use Binary search together with Jacobsthal's sequence in order to insert the pend chain's elements into main chain.
 	int ceiling;
@@ -198,8 +202,7 @@ std::vector<int> PmergeMe::doMagic(std::vector<int> numbers)
 		int index = binarySearch(sortedMain, pend[sequence[i] - 1], ceiling);
 		sortedMain.insert(sortedMain.begin() + index, pend[sequence[i] - 1]);
 	}
-	printVector("Combined Main Chain", sortedMain);
-	std::cout << std::endl;
+	DEBUG_PRINT(printVector, "Combined Main Chain", sortedMain, 1);
 	//Return the sorted main in order to proceed going up in recursion or return the completely sorted main chain!
 	return sortedMain;
 }
